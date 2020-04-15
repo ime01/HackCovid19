@@ -1,4 +1,4 @@
-package com.flowz.hackcovid19.PojoClasses;
+package com.flowz.hackcovid19.pojoClasses;
 
 import com.google.gson.annotations.SerializedName;
 

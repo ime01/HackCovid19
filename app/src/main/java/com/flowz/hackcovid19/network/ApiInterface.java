@@ -1,6 +1,6 @@
 package com.flowz.hackcovid19.network;
 
-import com.flowz.hackcovid19.PojoClasses.Summary;
+import com.flowz.hackcovid19.pojoClasses.Summary;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

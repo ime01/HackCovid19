@@ -1,61 +1,40 @@
-package com.flowz.hackcovid19.PojoClasses;
+package com.flowz.hackcovid19.pojoClasses;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Countries {
-
-    @SerializedName("Country")
-    private String Country;
-
-    @SerializedName("CountryCode")
-    private String CountryCode;
-
-    @SerializedName("Slug")
-    private String Slug;
+public class Global {
 
     @SerializedName("NewConfirmed")
+    @Expose
     private int NewConfirmed;
 
     @SerializedName("TotalConfirmed")
-    private int TotalConfirmed;
+    @Expose
+    private int  TotalConfirmed;
 
     @SerializedName("NewDeaths")
+    @Expose
     private int  NewDeaths;
 
     @SerializedName("TotalDeaths")
+    @Expose
     private int  TotalDeaths;
 
     @SerializedName("NewRecovered")
+    @Expose
     private int  NewRecovered;
 
     @SerializedName("TotalRecovered")
+    @Expose
     private int  TotalRecovered;
 
-    @SerializedName("Date")
-    private String Date;
-
-    public String getCountry() {
-        return Country;
+    public int getTotalConfirmed() {
+        return TotalConfirmed;
     }
 
-    public void setCountry(String country) {
-        Country = country;
-    }
-
-    public String getCountryCode() {
-        return CountryCode;
-    }
-
-    public void setCountryCode(String countryCode) {
-        CountryCode = countryCode;
-    }
-
-    public String getSlug() {
-        return Slug;
-    }
-
-    public void setSlug(String slug) {
-        Slug = slug;
+    public void setTotalConfirmed(int totalConfirmed) {
+        TotalConfirmed = totalConfirmed;
     }
 
     public int getNewConfirmed() {
@@ -64,14 +43,6 @@ public class Countries {
 
     public void setNewConfirmed(int newConfirmed) {
         NewConfirmed = newConfirmed;
-    }
-
-    public int getTotalConfirmed() {
-        return TotalConfirmed;
-    }
-
-    public void setTotalConfirmed(int totalConfirmed) {
-        TotalConfirmed = totalConfirmed;
     }
 
     public int getNewDeaths() {
@@ -104,13 +75,5 @@ public class Countries {
 
     public void setTotalRecovered(int totalRecovered) {
         TotalRecovered = totalRecovered;
-    }
-
-    public String getDate() {
-        return Date;
-    }
-
-    public void setDate(String date) {
-        Date = date;
     }
 }

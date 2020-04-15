@@ -1,5 +1,6 @@
-package com.flowz.hackcovid19.PojoClasses;
+package com.flowz.hackcovid19.pojoClasses;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -7,17 +8,20 @@ import java.util.List;
 public class Summary {
 
     @SerializedName("Global")
+    @Expose
     private Global global;
 
     @SerializedName("Countries")
-    private List<com.flowz.hackcovid19.PojoClasses.Countries> Countries;
+    @Expose
+    private List<Countries> countries = null;
 
     @SerializedName("Date")
+    @Expose
     private String Date;
 
-//    public Summary(String global, List<com.flowz.hackcovid19.PojoClasses.Countries> countries, String date) {
+//    public Summary(Global global, List<Countries> countries, String date) {
 //        Global = global;
-//        Countries = countries;
+//        countries = countries;
 //        Date = date;
 //    }
 
@@ -30,12 +34,12 @@ public class Summary {
         this.global = global;
     }
 
-    public List<com.flowz.hackcovid19.PojoClasses.Countries> getCountries() {
-        return Countries;
+    public List<Countries> getCountries() {
+        return countries;
     }
 
-    public void setCountries(List<com.flowz.hackcovid19.PojoClasses.Countries> countries) {
-        Countries = countries;
+    public void setCountries(List<Countries> countries) {
+        this.countries = countries;
     }
 
     public String getDate() {
