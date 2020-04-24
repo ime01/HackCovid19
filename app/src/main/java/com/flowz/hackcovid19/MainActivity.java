@@ -1,6 +1,9 @@
 package com.flowz.hackcovid19;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
@@ -8,6 +11,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,13 +26,20 @@ import com.flowz.hackcovid19.pojoClasses.Summary;
 
 import java.util.List;
 
+import static androidx.recyclerview.widget.LinearLayoutManager.*;
+
 public class MainActivity extends AppCompatActivity {
     Countries couDetail;
 
     RecyclerView rcyCountry;
 
-    TextView newConfirmed, newDeaths, newRecovered, totalConfirmed, totalDeaths, totalRecovered;
+    TextView newConfirmed, newDeaths, newRecovered, totalConfirmed, totalDeaths, totalRecovered, globalupdate, countrydetails;
     private Object Context;
+    ProgressBar progressBar;
+    CardView cardView;
+    ImageView rightArrow, leftArrow;
+    Spinner spinner;
+    public  int p;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,20 +47,70 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity1_main);
 
         rcyCountry = findViewById(R.id.ryc_country);
+        globalupdate = findViewById(R.id.global_update);
+        countrydetails = findViewById(R.id.country_details);
+        cardView = findViewById(R.id.cardView);
+        rcyCountry.setVisibility(View.INVISIBLE);
+        globalupdate.setVisibility(View.INVISIBLE);
+        countrydetails.setVisibility(View.INVISIBLE);
+        cardView.setVisibility(View.INVISIBLE);
 
-       // rcyCountry.setLayoutManager(new LinearLayoutManager(this));
-        rcyCountry.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        // rcyCountry.setLayoutManager(new LinearLayoutManager(this));
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
+        rcyCountry.setLayoutManager(layoutManager);
+        //rcyCountry.setLayoutManager(new LinearLayoutManager(this, HORIZONTAL, false));
 
+        spinner = findViewById(R.id.spinner);
+        progressBar = findViewById(R.id.progressBar2);
         newConfirmed = findViewById(R.id.newConfirmedNum);
         newDeaths = findViewById(R.id.newDeathsNum);
         newRecovered = findViewById(R.id.newRecoveredNum);
         totalConfirmed = findViewById(R.id.totalConfirmedNum);
         totalDeaths = findViewById(R.id.totalDeathsNum);
         totalRecovered = findViewById(R.id.totalRecoveredNum);
+        rightArrow = findViewById(R.id.swipe_right);
+        leftArrow = findViewById(R.id.swipe_left);
 
         getDataforCountryCode("CountryCode");
+
+        callNCDCbyState();
+
+        leftArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                p = layoutManager.findFirstVisibleItemPosition() - 1;
+                rcyCountry.smoothScrollToPosition( p);
+                checkVisibility();
+            }
+        });
+
+
+        rightArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                p = layoutManager.findLastVisibleItemPosition() + 1;
+                rcyCountry.smoothScrollToPosition(p);
+                checkVisibility();
+            }
+        });
     }
 
+    private void callNCDCbyState() {
+        int [] ncdcNumbersByState = {};
+    }
+
+    public void checkVisibility() {
+        if (p < 1) {
+            leftArrow.setVisibility(View.GONE);
+            rightArrow.setVisibility(View.VISIBLE);
+        } else if (p >= (rcyCountry.getAdapter().getItemCount() - 1)) {
+            leftArrow.setVisibility(View.VISIBLE);
+            rightArrow.setVisibility(View.GONE);
+        } else {
+            rightArrow.setVisibility(View.VISIBLE);
+            leftArrow.setVisibility(View.VISIBLE);
+        }
+    }
     public void getDataforCountryCode (final String CountryCode){
         ApiInterface retrofitInterface = ApiClient.getApiClent().create(ApiInterface.class);
 
@@ -114,11 +178,6 @@ public class MainActivity extends AppCompatActivity {
 //                                 +"\n Date :" + data9
 //                    );
 
-
-
-
-//
-//
 //                    for (Countries c : country){
 //
 //                        if (c.getCountryCode().equals(CountryCode))
@@ -145,40 +204,30 @@ public class MainActivity extends AppCompatActivity {
 //                        text1.append(dataContent);
 //
 //                    }
-
-//                    text1.append("\n New Confirmed :" + data +
-//                                 "\n TotalConfirmed :" + data5
-//                                 +"\n NewDeaths :" + data1
-//                                 +"\n TotalDeaths :" + data3
-//                                 +"\n NewRecovered :" + data2
-//                                 +"\n TotalRecovered :" + data4
-//                    );
-
-
                 } else{
                     Toast.makeText(MainActivity.this, "No Result", Toast.LENGTH_LONG).show();
-
                 }
             }
-
             @Override
             public void onFailure(Call<Summary> call, Throwable t) {
 
                 Toast.makeText(MainActivity.this, "Network Call Failure, try again", Toast.LENGTH_LONG).show();
-
-
             }
         });
 
-
-
-
-
     }
-
     private void loadCountriesRecycler(List<Countries> country) {
         CountryAdapter countryAdapter = new CountryAdapter(country, this);
         rcyCountry.setAdapter(countryAdapter);
+        progressBar.setVisibility(View.GONE);
+        rcyCountry.setVisibility(View.VISIBLE);
+        globalupdate.setVisibility(View.VISIBLE);
+        countrydetails.setVisibility(View.VISIBLE);
+        cardView.setVisibility(View.VISIBLE);
     }
+
+
+
+
 
 }
