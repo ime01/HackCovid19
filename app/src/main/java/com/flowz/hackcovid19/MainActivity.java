@@ -10,8 +10,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
@@ -24,6 +28,8 @@ import com.flowz.hackcovid19.network.ApiInterface;
 import com.flowz.hackcovid19.pojoClasses.Countries;
 import com.flowz.hackcovid19.pojoClasses.Summary;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static androidx.recyclerview.widget.LinearLayoutManager.*;
@@ -44,21 +50,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity1_main);
+        setContentView(R.layout.activity2_main);
 
         rcyCountry = findViewById(R.id.ryc_country);
         globalupdate = findViewById(R.id.global_update);
         countrydetails = findViewById(R.id.country_details);
         cardView = findViewById(R.id.cardView);
+
         rcyCountry.setVisibility(View.INVISIBLE);
         globalupdate.setVisibility(View.INVISIBLE);
         countrydetails.setVisibility(View.INVISIBLE);
-        cardView.setVisibility(View.INVISIBLE);
+        cardView.setVisibility(View.GONE);
 
-        // rcyCountry.setLayoutManager(new LinearLayoutManager(this));
+
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false);
         rcyCountry.setLayoutManager(layoutManager);
-        //rcyCountry.setLayoutManager(new LinearLayoutManager(this, HORIZONTAL, false));
 
         spinner = findViewById(R.id.spinner);
         progressBar = findViewById(R.id.progressBar2);
@@ -83,8 +89,6 @@ public class MainActivity extends AppCompatActivity {
                 checkVisibility();
             }
         });
-
-
         rightArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,10 +99,194 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void callNCDCbyState() {
-        int [] ncdcNumbersByState = {};
-    }
+    public void callNCDCbyState() {
+        String [] listOfState = {"CALL THE NCDC NOW","Abia State","Adamawa State","Akwa Ibom State","Anambra State","Bauchi State", "Bayelsa State","Benue State","Borno State","Cross River State","Delta State",
+                "Ebonyi State","Edo State","Ekiti State","Enugu State","Gombe State", "Imo State","Jigawa State","Kaduna State","Kano State","Katsina State",
+                "Kebbi State","Kogi State","Kwara State","Lagos State","Nasarawa State", "Niger State","Ogun State","Ondo State","Osun State","Oyo State",
+                "Plateau State","Rivers State","Sokoto State","Taraba State","Yobe State","Zamfara State","Federal Capital Territory"
+        };
 
+        final int listSize= listOfState.length-1;
+
+        final ArrayList<String> contactsOfNCDCbyState = new ArrayList<>(36);
+
+        contactsOfNCDCbyState.add("07002242362");
+        contactsOfNCDCbyState.add("08031230359");
+        contactsOfNCDCbyState.add("08189411111");
+        contactsOfNCDCbyState.add("09034728047");
+        contactsOfNCDCbyState.add("08023909309");
+        contactsOfNCDCbyState.add("08039216821");
+        contactsOfNCDCbyState.add("09018602439");
+        contactsOfNCDCbyState.add("080099999999");
+        contactsOfNCDCbyState.add("07035371180");
+        contactsOfNCDCbyState.add("08033521961");
+        contactsOfNCDCbyState.add("09020332489");
+        contactsOfNCDCbyState.add("08084096723");
+        contactsOfNCDCbyState.add("09062970434");
+        contactsOfNCDCbyState.add("08182555550");
+        contactsOfNCDCbyState.add("08103371257");
+        contactsOfNCDCbyState.add("08099555577");
+        contactsOfNCDCbyState.add("08068725224");
+        contactsOfNCDCbyState.add("08035871662");
+        contactsOfNCDCbyState.add("08039704476");
+        contactsOfNCDCbyState.add("09035037114");
+        contactsOfNCDCbyState.add("07046352309");
+        contactsOfNCDCbyState.add("07088292249");
+        contactsOfNCDCbyState.add("09062010001");
+        contactsOfNCDCbyState.add("08023169485");
+        contactsOfNCDCbyState.add("08036018579");
+        contactsOfNCDCbyState.add("09010999909");
+        contactsOfNCDCbyState.add("08001235678");
+        contactsOfNCDCbyState.add("07002684319");
+        contactsOfNCDCbyState.add("08035025692");
+        contactsOfNCDCbyState.add("08095394000");
+        contactsOfNCDCbyState.add("07032864444");
+        contactsOfNCDCbyState.add("08056109538");
+        contactsOfNCDCbyState.add("08032311116");
+        contactsOfNCDCbyState.add("08065508675");
+        contactsOfNCDCbyState.add("08131834764");
+        contactsOfNCDCbyState.add("08035626731");
+        contactsOfNCDCbyState.add("08031230508");
+
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                switch (i){
+                    case 1:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(0));
+                        break;
+                    case 2:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(1));
+                        break;
+                    case 3:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(2));
+                        break;
+                    case 4:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(3));
+                        break;
+                    case 5:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(4));
+                        break;
+                    case 6:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(5));
+                        break;
+                    case 7:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(6));
+                        break;
+                    case 8:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(7));
+                        break;
+                    case 9:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(8));
+                        break;
+                    case 10:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(9));
+                        break;
+                    case 11:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(10));
+                        break;
+                    case 12:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(11));
+                        break;
+                    case 13:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(12));
+                        break;
+                    case 14:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(13));
+                        break;
+                    case 15:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(14));
+                        break;
+                    case 16:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(15));
+                        break;
+                    case 17:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(16));
+                        break;
+                    case 18:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(17));
+                        break;
+                    case 19:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(18));
+                        break;
+                    case 20:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(19));
+                        break;
+                    case 21:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(20));
+                        break;
+                    case 22:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(21));
+                        break;
+                    case 23:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(22));
+                        break;
+                    case 24:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(23));
+                        break;
+                    case 25:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(24));
+                        break;
+                    case 26:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(25));
+                        break;
+                    case 27:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(26));
+                        break;
+                    case 28:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(27));
+                        break;
+                    case 29:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(28));
+                        break;
+                    case 30:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(29));
+                        break;
+                    case 31:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(30));
+                        break;
+                    case 32:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(31));
+                        break;
+                    case 33:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(32));
+                        break;
+                    case 34:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(33));
+                        break;
+                    case 35:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(34));
+                        break;
+                    case 36:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(35));
+                        break;
+                    case 37:
+                        dialNCDCnumber(contactsOfNCDCbyState.get(36));
+                        break;
+                }
+            }
+
+            private void dialNCDCnumber(String contactNumber) {
+                Intent callNcdc = new Intent(Intent.ACTION_DIAL);
+                callNcdc.setData(Uri.parse("tel:" + contactNumber));
+                startActivity(callNcdc);
+                return;
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+//        HashMap myMap = new HashMap();
+//        myMap.put("Abia", 07067624441);
+//        myMap.put("Akwa Ibom", 07098624451);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, listOfState);
+        spinner.setAdapter(adapter);
+    }
     public void checkVisibility() {
         if (p < 1) {
             leftArrow.setVisibility(View.GONE);
@@ -157,27 +345,6 @@ public class MainActivity extends AppCompatActivity {
                     loadCountriesRecycler(country);
 
 
-//                    String data1 = country.get(20).getCountry();
-//                    String data2 = country.get(20).getCountryCode();
-//                    String data3 = country.get(20).getSlug();
-//                    String data4 = String.valueOf(country.get(20).getNewConfirmed());
-//                    String data5 = String.valueOf(country.get(20).getNewDeaths());
-//                    String data6 = String.valueOf(country.get(20).getTotalDeaths());
-//                    String data7 = String.valueOf(country.get(20).getNewRecovered());
-//                    String data8 = String.valueOf(country.get(20).getTotalRecovered());
-//                    String data9 = country.get(20).getDate();
-
-//                    text1.append("\n Country :" + data1 +
-//                                 "\n CountryCode :" + data2
-//                                 +"\n Slug :" + data3
-//                                 +"\n NewConfirmed :" + data4
-//                                 +"\n NewDeaths :" + data5
-//                                 +"\n TotalDeaths :" + data6 +
-//                                 "\n NewRecovered :" + data7
-//                                 +"\n TotalRecovered :" + data8
-//                                 +"\n Date :" + data9
-//                    );
-
 //                    for (Countries c : country){
 //
 //                        if (c.getCountryCode().equals(CountryCode))
@@ -191,9 +358,6 @@ public class MainActivity extends AppCompatActivity {
 //                            }
 //                        });
 //                    }
-
-
-                    //String data = response.body().getCountries().toString();
 
 
 //                    for (Countries countries1: country) {
@@ -214,7 +378,6 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Network Call Failure, try again", Toast.LENGTH_LONG).show();
             }
         });
-
     }
     private void loadCountriesRecycler(List<Countries> country) {
         CountryAdapter countryAdapter = new CountryAdapter(country, this);
@@ -225,9 +388,4 @@ public class MainActivity extends AppCompatActivity {
         countrydetails.setVisibility(View.VISIBLE);
         cardView.setVisibility(View.VISIBLE);
     }
-
-
-
-
-
 }
