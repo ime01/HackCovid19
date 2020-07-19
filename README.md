@@ -4,7 +4,7 @@ An app built for Covid 19, it fetechs data from a covid 19 API
 
 It shows the global figures
 
-also shows individual country figures which can scrolled in a horizontal recyclerview
+also shows individual country figures which can be scrolled in a horizontal recyclerview
 
 Also tells users the 5 W.H.O  guideline to follow in this period 
 
